@@ -12,7 +12,7 @@ docker build -t tiagotele/golangsample:<VERSION_TAG> .
 
 ## Running docker image
 ```
-docker run -it -p 8093:8093 tiagotele/golangsample:<VERSION_TAG>
+docker run -it -p 8080:8080 tiagotele/golangsample:<VERSION_TAG>
 ```
 
 ## Pushing to DockerHub
