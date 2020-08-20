@@ -23,3 +23,10 @@ docker push tiagotele/golangsample:<VERSION_TAG>
 
 ## Docker image
 Docker image are available at [DockerHub](https://hub.docker.com/r/tiagotele/golangsample).
+
+
+# For testing purposes
+## Running locally with Docker compose
+```
+docker-compose up
+```
