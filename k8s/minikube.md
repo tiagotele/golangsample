@@ -64,3 +64,17 @@ Types:
 - ClusterIP: default. reachable within cluster
 - NodePort: 
 - LoadBalancer
+
+## Labels
+
+You can tag resource(s)
+Not unique: you use mulitple lables.
+
+Used on Node selector.
+
+First add label to node
+kubectl label nodes node1 key=value
+
+Secondly add pod to node that use that label.
+
+kubectl label nodes minikube turma=uni7
