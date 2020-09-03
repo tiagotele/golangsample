@@ -78,3 +78,24 @@ kubectl label nodes node1 key=value
 Secondly add pod to node that use that label.
 
 kubectl label nodes minikube turma=uni7
+
+
+## Pod states
+
+pending
+succeeded
+failed
+unknown
+
+kubectl describe pod to get info about pod
+
+### 5 pod states
+- PodScheduled
+- Ready
+- Initialized
+- Unschedulable
+- ContainersReady
+
+containers state
+
+
