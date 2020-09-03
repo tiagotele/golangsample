@@ -49,7 +49,18 @@ kubectl rollout status deployment/myapp-deployment
 
 kubectl rollout history deployment/myapp-deployment
 
-# To record info about deployment
-# kubectl create -f deployment.yml --record
+> To record info about deployment
+> kubectl create -f deployment.yml --record
 
 kubectl rollout undo deployment/myapp-deployment
+
+## Services
+Pods are acessed by services, not directly
+Logcial bridge between "mortal" pods and other servies or end-users.
+
+kubectl expose creates a service
+
+Types:
+- ClusterIP: default. reachable within cluster
+- NodePort: 
+- LoadBalancer
