@@ -17,4 +17,4 @@ spec:
         image: tiagotele/golangsample:2.0
         ports:
         - name: myapp-port
-          containerPort: 8081
+          containerPort: 8080

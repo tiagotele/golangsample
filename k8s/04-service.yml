@@ -8,5 +8,5 @@ spec:
     targetPort: myapp-port
     protocol: TCP
   selector:
-    app: sample
+    app: myapp
   type: NodePort
