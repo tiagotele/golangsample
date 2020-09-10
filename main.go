@@ -18,7 +18,7 @@ import (
 
 var (
 	
-	endpoint_counter = promauto.NewCounterVec(prometheus.CounterOpts{
+	endpointCounter = promauto.NewCounterVec(prometheus.CounterOpts{
 			Name: "my_endpoints_request",
 			Help: "The total requests for my endpoints",
 	},
@@ -47,9 +47,6 @@ func main() {
 		mux.HandleFunc("/", homeFunc)
 		mux.HandleFunc("/list", listFunc)
 		mux.HandleFunc("/other", requestOtherServiceFunc)
-		
-
-		
 		errorChannel <- http.ListenAndServe(":8081", mux)
 	}()
 
@@ -62,7 +59,7 @@ func homeFunc(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	endpoint_counter.WithLabelValues("home").Inc()
+	endpointCounter.WithLabelValues("home").Inc()
 	fmt.Println("Home endpoint")
 	w.Write([]byte(`Home endpoint`))
 }
@@ -73,7 +70,7 @@ func listFunc(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	endpoint_counter.WithLabelValues("list").Inc()
+	endpointCounter.WithLabelValues("list").Inc()
 	fmt.Println("List endpoint")
 	w.Write([]byte(`List endpoint`))
 }
@@ -99,6 +96,7 @@ func requestOtherServiceFunc(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	endpointCounter.WithLabelValues("other").Inc()
 
 	fmt.Println(fmt.Sprintf("Sum of %d + %d = %s", a, b, string(body)))
 	w.Write([]byte(fmt.Sprintf("Sum of %d + %d = %s", a, b, string(body))))
@@ -110,7 +108,7 @@ func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 		fmt.Fprint(w, "custom 404")
 	}
 
-	endpoint_counter.WithLabelValues("not_found").Inc()
+	endpointCounter.WithLabelValues("not_found").Inc()
 }
 
 func nextInt() int {
