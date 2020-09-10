@@ -10,6 +10,8 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+
 )
 
 func main() {
@@ -29,10 +31,13 @@ func main() {
 
 		mux := http.NewServeMux()
 
+		mux.Handle("/metrics", promhttp.Handler())
 		mux.HandleFunc("/", homeFunc)
 		mux.HandleFunc("/list", listFunc)
 		mux.HandleFunc("/other", requestOtherServiceFunc)
+		
 
+		
 		errorChannel <- http.ListenAndServe(":8081", mux)
 	}()
 
