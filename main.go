@@ -10,8 +10,20 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
+)
+
+var (
+	
+	endpoint_counter = promauto.NewCounterVec(prometheus.CounterOpts{
+			Name: "my_endpoints_request",
+			Help: "The total requests for my endpoints",
+	},
+	[]string{"endpoint_name"},
+	)
 )
 
 func main() {
@@ -49,6 +61,8 @@ func homeFunc(w http.ResponseWriter, r *http.Request) {
 		errorHandler(w, r, http.StatusNotFound)
 		return
 	}
+
+	endpoint_counter.WithLabelValues("home").Inc()
 	fmt.Println("Home endpoint")
 	w.Write([]byte(`Home endpoint`))
 }
@@ -59,6 +73,7 @@ func listFunc(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	endpoint_counter.WithLabelValues("list").Inc()
 	fmt.Println("List endpoint")
 	w.Write([]byte(`List endpoint`))
 }
@@ -94,6 +109,8 @@ func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	if status == http.StatusNotFound {
 		fmt.Fprint(w, "custom 404")
 	}
+
+	endpoint_counter.WithLabelValues("not_found").Inc()
 }
 
 func nextInt() int {
