@@ -10,6 +10,20 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+
+)
+
+var (
+	
+	endpointCounter = promauto.NewCounterVec(prometheus.CounterOpts{
+			Name: "my_endpoints_request",
+			Help: "The total requests for my endpoints",
+	},
+	[]string{"endpoint_name"},
+	)
 )
 
 func main() {
@@ -29,10 +43,10 @@ func main() {
 
 		mux := http.NewServeMux()
 
+		mux.Handle("/metrics", promhttp.Handler())
 		mux.HandleFunc("/", homeFunc)
 		mux.HandleFunc("/list", listFunc)
 		mux.HandleFunc("/other", requestOtherServiceFunc)
-
 		errorChannel <- http.ListenAndServe(":8081", mux)
 	}()
 
@@ -44,6 +58,8 @@ func homeFunc(w http.ResponseWriter, r *http.Request) {
 		errorHandler(w, r, http.StatusNotFound)
 		return
 	}
+
+	endpointCounter.WithLabelValues("home").Inc()
 	fmt.Println("Home endpoint")
 	w.Write([]byte(`Home endpoint`))
 }
@@ -54,6 +70,7 @@ func listFunc(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	endpointCounter.WithLabelValues("list").Inc()
 	fmt.Println("List endpoint")
 	w.Write([]byte(`List endpoint`))
 }
@@ -79,6 +96,7 @@ func requestOtherServiceFunc(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	endpointCounter.WithLabelValues("other").Inc()
 
 	fmt.Println(fmt.Sprintf("Sum of %d + %d = %s", a, b, string(body)))
 	w.Write([]byte(fmt.Sprintf("Sum of %d + %d = %s", a, b, string(body))))
@@ -89,6 +107,8 @@ func errorHandler(w http.ResponseWriter, r *http.Request, status int) {
 	if status == http.StatusNotFound {
 		fmt.Fprint(w, "custom 404")
 	}
+
+	endpointCounter.WithLabelValues("not_found").Inc()
 }
 
 func nextInt() int {
