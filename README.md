@@ -30,3 +30,6 @@ Docker image are available at [DockerHub](https://hub.docker.com/r/tiagotele/gol
 ```
 docker-compose up
 ```
+
+# Helm chart
+A [Helm Chart](https://helm.sh/) is available for docker image of this repository is available [here](https://github.com/tiagotele/myapp-chart).
