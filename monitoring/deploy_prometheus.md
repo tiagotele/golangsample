@@ -19,3 +19,6 @@ helm3 install grafana bitnami/grafana --version 3.4.1 --set service.type="NodePo
 
 # Installing MyApp via Helm Chart
 helm3 install myapp myapp-chart
+
+# Installing Jaeger
+helm3 install jaeger jaegertracing/jaeger
