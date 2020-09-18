@@ -130,3 +130,6 @@ Contition pod has passed.
 
 Can be environment variables
 Can be environment volume
+
+# Configmap
+https://github.com/fabiogomezdiaz/spring-boot-configmap-demos/blob/master/1-basic-configmap/k8s/deployment.yaml
