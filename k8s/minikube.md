@@ -88,22 +88,41 @@ Secondly add pod to node that use that label.
 kubectl label nodes minikube turma=uni7
 ```
 
+## Health checks
+
+2 ways:
+- run command on container periodically
+- periodic checks URL(HTTP)
+
+## Healthchecks and Readness
+- Healthcheck see if container is running
+- Readiness indicate if container is ready to serve requests.
+
+
+
 ## Pod states
 
-pending
-succeeded
-failed
-unknown
+### Pod status
+High level
+
+- pending
+- succeeded
+- failed
+- unknown
 
 kubectl describe pod to get info about pod
 
-### 5 pod states
+### 5 pod condition
+Contition pod has passed.
+
 - PodScheduled
 - Ready
 - Initialized
 - Unschedulable
 - ContainersReady
 
-containers state
-
+### containers state
+- Running
+- Terminated
+- Waiting
 
