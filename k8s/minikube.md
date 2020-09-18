@@ -73,29 +73,63 @@ Not unique: you use mulitple lables.
 Used on Node selector.
 
 First add label to node
+
+```
+get nodes --show-labels
+```
+
+To add label to a node
+```
 kubectl label nodes node1 key=value
+```
 
 Secondly add pod to node that use that label.
-
+```
 kubectl label nodes minikube turma=uni7
+```
+
+## Health checks
+
+2 ways:
+- run command on container periodically
+- periodic checks URL(HTTP)
+
+## Healthchecks and Readness
+- Healthcheck see if container is running
+- Readiness indicate if container is ready to serve requests.
+
 
 
 ## Pod states
 
-pending
-succeeded
-failed
-unknown
+### Pod status
+High level
+
+- pending
+- succeeded
+- failed
+- unknown
 
 kubectl describe pod to get info about pod
 
-### 5 pod states
+### 5 pod condition
+Contition pod has passed.
+
 - PodScheduled
 - Ready
 - Initialized
 - Unschedulable
 - ContainersReady
 
-containers state
+### containers state
+- Running
+- Terminated
+- Waiting
 
+# Secrets
 
+Can be environment variables
+Can be environment volume
+
+# Configmap
+https://github.com/fabiogomezdiaz/spring-boot-configmap-demos/blob/master/1-basic-configmap/k8s/deployment.yaml
