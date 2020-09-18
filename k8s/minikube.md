@@ -126,3 +126,7 @@ Contition pod has passed.
 - Terminated
 - Waiting
 
+# Secrets
+
+Can be environment variables
+Can be environment volume
